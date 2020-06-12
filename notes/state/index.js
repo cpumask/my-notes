@@ -56,9 +56,9 @@ const handler = {
     if (prop === "active") {
       if (value in state.notes) {
         view.setActive(value, state.notes[value].content, { renameNote, deleteNote });
-        view.setPage("content");
+        view.setPage("note");
       } else {
-        view.setPage("notes");
+        view.setPage("home");
       }
       chrome.storage.local.set({ active: value });
     }

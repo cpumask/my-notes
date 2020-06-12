@@ -3,29 +3,25 @@
 import { closeDropdowns } from "./dropdown.js";
 import { removeModal } from "../modals.js";
 
-import { panel, notes, content, toolbar } from "./elements.js";
+import { pageHome as home, pageNote as note } from "./elements.js";
 import { hide, show } from "./visibility.js";
 
-export default function setPage(pageName) {
+export default function setPage(page) {
   document.body.style.opacity = 0;
 
   closeDropdowns();
   removeModal();
 
-  hide(panel);
-  hide(notes);
-  hide(content);
-  hide(toolbar);
+  hide(home);
+  hide(note);
 
-  if (pageName === "notes") {
+  if (page === "home") {
     document.title = "My Notes";
-    show(notes);
+    show(home);
   }
 
-  if (pageName === "content") {
-    show(panel);
-    show(content);
-    show(toolbar);
+  if (page === "note") {
+    show(note);
   }
 
   document.body.style.opacity = 1;

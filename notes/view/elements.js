@@ -6,8 +6,11 @@ const _get = ID => document.getElementById(ID);
 
 const googleFonts = _get("google-fonts");
 
-// All Notes
-const notes = _get("notes");
+// Pages
+const pageHome = _get("page-home");
+const pageNote = _get("page-note");
+
+// Home
 const existingNotes = _get("existing-notes");
 const createNote = _get("create-note");
 const openOptions = _get("open-options");
@@ -16,7 +19,7 @@ const syncNow = _get("sync-now");
 const lastSync = _get("last-sync");
 const openInGoogleDrive = _get("open-in-google-drive");
 
-// Note detail
+// Note
 const panel = _get("panel");
 const noteName = _get("note-name");
 const noteOptions = _get("note-options");
@@ -31,8 +34,11 @@ const modalTemplate = _get("modal-template");
 export {
   googleFonts,
 
-  // All Notes
-  notes,
+  // Pages
+  pageHome,
+  pageNote,
+
+  // Home
   existingNotes,
   createNote,
   openOptions,
@@ -41,7 +47,7 @@ export {
   lastSync,
   openInGoogleDrive,
 
-  // Note detail
+  // Note
   panel,
   noteName,
   noteOptions,
