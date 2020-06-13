@@ -55,7 +55,7 @@ const handler = {
       view.setSize(value);
     }
     if (prop === "notes") {
-      view.setNotes(value, { activateNote, renameNote, deleteNote });
+      view.setNotes(value, { activeNote: stateProxy.active, activateNote, renameNote, deleteNote });
     }
     if (prop === "active") {
       if (value in state.notes) {
@@ -73,7 +73,7 @@ const handler = {
       view.setFocus(value);
     }
     if (prop === "theme") {
-      view.setTheme(value);
+      view.setTheme(value.name, value.customTheme);
     }
     if (prop === "sync") {
       view.setSync(value);

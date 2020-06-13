@@ -1,9 +1,6 @@
-/* global document */
-
 import {
   currentSize,
   sizeRange,
-  customInputs,
   focusCheckbox,
   newtabCheckbox,
   tabCheckbox,
@@ -20,7 +17,7 @@ import {
 } from "./helpers.js";
 
 import formatDate from "../shared/date/format-date.js";
-import { initCustomTheme } from "../themes/custom.js";
+import setThemeCore from "../themes/set-theme.js";
 
 const setFont = (font) => {
   // Display the name of the current font
@@ -38,19 +35,9 @@ const setSize = (size) => {
   sizeRange.value = size;
 };
 
-const setTheme = (theme) => {
+const setTheme = (theme, customTheme) => {
   checkById(theme);
-  document.body.id = theme;
-};
-
-const setCustomTheme = (customTheme) => {
-  customInputs.forEach(input => {
-    const key = input.dataset.key;
-    const label = input.parentNode;
-    label.style.backgroundColor = customTheme[key];
-    input.value = customTheme[key];
-  });
-  initCustomTheme(customTheme);
+  setThemeCore(theme, customTheme);
 };
 
 const setFocus = (focus) => {
@@ -99,7 +86,6 @@ export {
   setFont,
   setSize,
   setTheme,
-  setCustomTheme,
   setFocus,
   setNewtab,
   setTab,

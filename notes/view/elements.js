@@ -10,9 +10,12 @@ const googleFonts = _get("google-fonts");
 const pageHome = _get("page-home");
 const pageNote = _get("page-note");
 
+// Actions
+const newNoteActions = document.querySelectorAll(".new-note.action");
+const openOptionsActions = document.querySelectorAll(".open-options.action");
+
 // Home
 const existingNotes = _get("existing-notes");
-const createNote = _get("create-note");
 const openOptions = _get("open-options");
 const syncContainer = _get("sync-container");
 const syncNow = _get("sync-now");
@@ -20,6 +23,10 @@ const lastSync = _get("last-sync");
 const openInGoogleDrive = _get("open-in-google-drive");
 
 // Note
+const sidebar = _get("sidebar");
+const sidebarNotes = _get("sidebar-notes");
+const sidebarToggle = _get("sidebar-toggle");
+const drag = _get("drag");
 const panel = _get("panel");
 const noteName = _get("note-name");
 const noteOptions = _get("note-options");
@@ -38,9 +45,12 @@ export {
   pageHome,
   pageNote,
 
+  // Actions
+  newNoteActions,
+  openOptionsActions,
+
   // Home
   existingNotes,
-  createNote,
   openOptions,
   syncContainer,
   syncNow,
@@ -48,6 +58,10 @@ export {
   openInGoogleDrive,
 
   // Note
+  sidebar,
+  sidebarNotes,
+  sidebarToggle,
+  drag,
   panel,
   noteName,
   noteOptions,

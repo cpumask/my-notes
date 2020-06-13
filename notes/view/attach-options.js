@@ -4,6 +4,7 @@ import { isReserved } from "../reserved.js";
 import { closeDropdown, closeDropdowns } from "./dropdown.js";
 import { showOverlay, removeOverlay } from "./overlay.js";
 import { renameNoteModal, deleteNoteModal } from "../modals.js";
+import { pageNote as note } from "./elements.js";
 
 export const reset = () => {
   const tiles = document.getElementsByClassName("note-tile in-action");
@@ -40,18 +41,19 @@ export default function attachOptions(noteName, { noteOptions, noteTile, renameN
     closeDropdown(dropdown);
     if (useTile) { noteTile.classList.add(clazz, "in-action"); }
     if (useOverlay) { showOverlay(clazz); }
-    handler();
+    const parent = useOverlay ? note : document.body;
+    handler(parent);
   };
 
   renameAction.onclick = () => {
-    callAction("to-rename", () => {
-      renameNoteModal(noteName, (newName) => { renameNote(noteName, newName); }, reset);
+    callAction("to-rename", (parent) => {
+      renameNoteModal(noteName, (newName) => { renameNote(noteName, newName); }, reset, parent);
     });
   };
 
   deleteAction.onclick = () => {
-    callAction("to-delete", () => {
-      deleteNoteModal(noteName, () => { deleteNote(noteName); }, reset);
+    callAction("to-delete", (parent) => {
+      deleteNoteModal(noteName, () => { deleteNote(noteName); }, reset, parent);
     });
   };
 }

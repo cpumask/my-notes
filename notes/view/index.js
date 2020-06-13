@@ -5,7 +5,7 @@ import showNotification from "./show-notification.js";
 import setFont from "./set-font.js";
 import setSize from "./set-size.js";
 import setFocus from "./set-focus.js";
-import setTheme from "./set-theme.js";
+import setTheme from "../../themes/set-theme.js";
 
 // Notes
 import setNotes from "./set-notes.js";

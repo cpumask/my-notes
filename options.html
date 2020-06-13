@@ -5,7 +5,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Notes</title>
-  <style id="theme-variables"></style>
+  <link rel="stylesheet" href="themes/shared.css">
   <link rel="stylesheet" href="options.css">
 </head>
 
@@ -66,66 +66,58 @@
     <div class="selection">
       <input type="radio" id="custom" name="theme" value="custom">
       <label for="custom" id="custom-theme-label" class="bold theme-label">Custom</label>
-    </div>
-  </div>
-
-
-  <div id="custom-theme">
-    <div class="setting">
-      <span>Background</span>
-      <label>
-        <input type="color" name="custom" data-key="background" id="custom-background">
-      </label>
-    </div>
-    <div class="setting">
-      <span>Text</span>
-      <label>
-        <input type="color" name="custom" data-key="text" id="custom-text">
-      </label>
+      <a href="themes/custom.html" target="_blank" class="space-left">Customize</a>
     </div>
   </div>
 
 
   <h2>Hotkeys</h2>
   <div>
-    <span>Open <b>chrome://extensions/shortcuts</b> in a tab to configure:</span>
     <ul>
       <li>
-        <b>Activate the extension</b>
-        <span class="info">Open My Notes, e.g.: <span class="hotkey">Cmd + Shift + M</span></span>
+        <b>Open My Notes</b>
+        <span class="info">
+          <span class="hotkey">Ctrl + Shift + M</span> (set in <b>chrome://extensions/shortcuts</b>)
+        </span>
       </li>
-    </ul>
-    <span>Other keys:</span>
-    <ul>
       <li>
         <b>Open Options</b>
         <span class="info">
-          <span class="hotkey">Cmd + Shift + O</span> or
           <span class="hotkey">Ctrl + Shift + O</span>
         </span>
       </li>
       <li>
         <b>Toggle Focus mode</b>
         <span class="info">
-          <span class="hotkey">Cmd + Shift + F</span> or
           <span class="hotkey">Ctrl + Shift + F</span>
+        </span>
+      </li>
+      <li>
+        <b>Toggle Sidebar</b>
+        <span class="info">
+          <span class="hotkey">Ctrl + S</span>
+        </span>
+      </li>
+      <li>
+        <b>Toggle Toolbar</b>
+        <span class="info">
+          <span class="hotkey">Ctrl + E</span>
         </span>
       </li>
       <li>
         <b>Go to Previous note</b>
         <span class="info">
-          <span class="hotkey">Cmd + [</span> or
           <span class="hotkey">Ctrl + [</span>
         </span>
       </li>
       <li>
         <b>Go to Next note</b>
         <span class="info">
-          <span class="hotkey">Cmd + ]</span> or
           <span class="hotkey">Ctrl + ]</span>
         </span>
       </li>
     </ul>
+    <span>In <b>OSX</b>, you can also use <span class="hotkey">Cmd</span> instead of <span class="hotkey">Ctrl</span>.</span>
   </div>
 
 
@@ -189,8 +181,8 @@
   <h2>Version</h2>
   <div>
     <strong id="version" class="space-right"></strong>
-    <a href="https://github.com/penge/my-notes/releases" target="_blank" class="space-right">Changelog</a>
-    <a href="https://github.com/penge/my-notes" target="_blank">Repository</a>
+    <a href="https://github.com/penge/my-notes/releases" target="_blank">Changelog</a>
+    <a href="https://github.com/penge/my-notes" target="_blank" class="space-left">Repository</a>
   </div>
 
 

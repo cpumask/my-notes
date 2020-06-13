@@ -1,14 +1,14 @@
-/* global chrome, window, prompt, Set, localStorage */
+/* global chrome, window, Set, localStorage */
 
 // Setting application state and view updates are done via a Proxy
 import state from "./notes/state/index.js";
 
-import { noteName, createNote, openOptions, syncNow, lastSync, content } from "./notes/view/elements.js";
+import { noteName, newNoteActions, openOptionsActions, syncNow, lastSync, content } from "./notes/view/elements.js";
 import typing from "./notes/typing.js";
 import toolbar from "./notes/toolbar.js";
 import { saveNotes, syncNotes } from "./notes/saving.js";
 import hotkeys from "./notes/hotkeys.js";
-import { initCustomTheme } from "../themes/custom.js";
+import sidebar from "./notes/sidebar.js";
 import { newNoteModal } from "./notes/modals.js";
 
 let tabId; // important so can update the content in other tabs (except the tab that has made the changes)
@@ -16,10 +16,11 @@ chrome.tabs.getCurrent((tab) => {
   // set as a "string" to quickly compare with localStorage.getItem("notesChangedBy")
   tabId = String(tab.id);
 
-  // Typing, Toolbar, Commands, Hotkeys
+  // Typing, Toolbar, Hotkeys, Sidebar
   typing.initialize(content, tabId);
   toolbar.initialize(content, tabId);
   hotkeys.register(state);
+  sidebar.register(state);
 });
 
 // Go back to Main page
@@ -28,17 +29,22 @@ noteName.addEventListener("click", () => {
 });
 
 // Create a New note
-createNote.addEventListener("click", (event) => {
-  event.preventDefault();
-  newNoteModal((name) => {
-    state.createNote(name);
+newNoteActions.forEach(action => {
+  action.addEventListener("click", (event) => {
+    event.preventDefault();
+    newNoteModal((name) => {
+      const autoActivate = typeof state.active === "string";
+      state.createNote(name, autoActivate);
+    }, state.active ? "center" : "top");
   });
 });
 
 // Open Options
-openOptions.addEventListener("click", (event) => {
-  event.preventDefault();
-  chrome.tabs.create({ url: "/options.html" });
+openOptionsActions.forEach(action => {
+  action.addEventListener("click", (event) => {
+    event.preventDefault();
+    chrome.tabs.create({ url: "/options.html" });
+  });
 });
 
 // Sync Now
@@ -56,8 +62,7 @@ chrome.storage.local.get([
   // Appearance
   state.font = font;
   state.size = size;
-  state.theme = theme;
-  initCustomTheme(customTheme);
+  state.theme = { name: theme, customTheme };
 
   // Notes
   state.notes = notes;
@@ -77,8 +82,12 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   if (areaName === "local") {
     if (changes["font"]) { state.font = changes["font"].newValue; }
     if (changes["size"]) { state.size = changes["size"].newValue; }
-    if (changes["theme"]) { state.theme = changes["theme"].newValue; }
-    if (changes["customTheme"]) { initCustomTheme(changes["customTheme"].newValue); }
+    if (changes["theme"]) { state.theme = { name: changes["theme"].newValue }; }
+    if (changes["customTheme"]) {
+      if (state.theme && state.theme.name === "custom") {
+        state.theme = { name: "custom", customTheme: changes["customTheme"].newValue };
+      }
+    }
     if (changes["focus"]) { state.focus = changes["focus"].newValue; }
     if (changes["tab"]) { state.tab = changes["tab"].newValue; }
     if (changes["sync"]) { state.sync = changes["sync"].newValue; }
@@ -87,6 +96,12 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
       const oldNotes = changes["notes"].oldValue;
       const newNotes = changes["notes"].newValue;
       state.notes = newNotes;
+
+      const newActive = changes["active"] && changes["active"].newValue;
+      if (newActive && newActive in newNotes) {
+        state.active = newActive;
+        return;
+      }
 
       if (!state.active) {
         return;
@@ -113,7 +128,7 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
       const oldSet = new Set(Object.keys(oldNotes));
       const newSet = new Set(Object.keys(newNotes));
       if (oldSet.size > newSet.size) {
-        state.active = null;
+        state.active = "Clipboard";
         return;
       }
 

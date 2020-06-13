@@ -1,10 +1,12 @@
 /* global document */
 
+import { pageNote as note } from "./elements.js";
+
 export const showOverlay = (clazz) => {
   const overlay = document.createElement("div");
   overlay.id = "overlay";
   overlay.className = clazz; // "to-rename" or "to-delete"
-  document.body.appendChild(overlay);
+  note.prepend(overlay);
   document.body.classList.add("with-overlay");
 };
 

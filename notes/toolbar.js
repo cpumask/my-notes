@@ -25,9 +25,8 @@ const controls = [
   [get("CC"), () => exec("justifyCenter")],
   [get("CR"), () => exec("justifyRight")],
 
-  [get("IMG"), (content) => {
+  [get("IMG"), () => {
     insertImageModal((url) => {
-      content.focus();
       exec("insertImage", url);
     });
   }],
@@ -37,7 +36,7 @@ const initialize = (content, tabId) => {
   for (const control of controls) {
     const [element, handler] = control;
     element.addEventListener("click", () => {
-      handler(content) && edit(content, tabId);
+      handler() && edit(content, tabId);
     });
   }
 };

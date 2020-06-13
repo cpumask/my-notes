@@ -5,35 +5,75 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Notes</title>
-  <style id="theme-variables"></style>
   <link rel="stylesheet" href="" id="google-fonts">
+  <link rel="stylesheet" href="themes/shared.css">
   <link rel="stylesheet" href="notes.css">
 </head>
 
 <body>
   <div id="page-home" class="hide">
     <div id="existing-notes"><!-- Render #note-tile-template for each note --></div>
-    <div class="bottom">
-      <a href="#" id="create-note">New note</a>
-      <a href="#" id="open-options">Options</a>
-    </div>
-    <div class="bottom" id="sync-container">
-      <a href="#" id="sync-now" title="Notes are synchronized with Google Drive automatically on every Open/Close/Refresh of My Notes.
+    <div id="bottom">
+      <div class="bottom">
+        <a href="#" class="new-note action">New note</a>
+        <a href="#" class="open-options action">Options</a>
+      </div>
+      <div class="bottom" id="sync-container">
+        <a href="#" id="sync-now" title="Notes are synchronized with Google Drive automatically on every Open/Close/Refresh of My Notes.
 
-Click &#34;Sync Now&#34; button if you would like to synchronize the notes now.
+  Click &#34;Sync Now&#34; button if you would like to synchronize the notes now.
 
-This is useful if you plan to continue your work on a second computer, to make sure the notes were synchronized before signing off.
+  This is useful if you plan to continue your work on a second computer, to make sure the notes were synchronized before signing off.
 
-&#34;Last sync&#34; will be updated once finished.">Sync Now</a>
-      <div id="sync-details">
-        <div>Last sync: <span id="last-sync" class="bold"></span></div>
-        <div><a href="#" id="open-in-google-drive" class="bold" target="_blank">Open in Google Drive</a></div>
+  &#34;Last sync&#34; will be updated once finished.">Sync Now</a>
+        <div id="sync-details">
+          <div>Last sync: <span id="last-sync" class="bold"></span></div>
+          <div><a href="#" id="open-in-google-drive" class="bold" target="_blank">Open in Google Drive</a></div>
+        </div>
       </div>
     </div>
   </div>
 
   <div id="page-note" class="hide">
+    <div id="sidebar">
+      <div id="sidebar-notes" class="notes">
+        <div class="note">Article</div>
+        <div class="note">Clipboard</div>
+        <div class="note active">Preview</div>
+        <div class="note">Todo</div>
+      </div>
+      <div id="sidebar-buttons">
+        <svg viewBox="0 0 426.667 426.667" class="new-note action" title="New note">
+            <path d="M256,0H85.333C61.76,0,42.88,19.093,42.88,42.667L42.667,384c0,23.573,18.88,42.667,42.453,42.667h256.213
+              C364.907,426.667,384,407.573,384,384V128L256,0z M234.667,149.333V32L352,149.333H234.667z"/>
+        </svg>
+        <svg viewBox="0 0 426.667 426.667" class="open-options action" title="Options">
+          <path d="M416.8,269.44l-45.013-35.307c0.853-6.827,1.493-13.76,1.493-20.8s-0.64-13.973-1.493-20.8l45.12-35.307
+            c4.053-3.2,5.227-8.96,2.56-13.653L376.8,69.653c-2.667-4.587-8.213-6.507-13.013-4.587l-53.12,21.44
+            c-10.987-8.427-23.04-15.573-36.053-21.013l-8-56.533C265.653,3.947,261.28,0,255.947,0h-85.333c-5.333,0-9.707,3.947-10.56,8.96
+            l-8,56.533c-13.013,5.44-25.067,12.48-36.053,21.013l-53.12-21.44c-4.8-1.813-10.347,0-13.013,4.587L7.2,143.573
+            c-2.667,4.587-1.493,10.347,2.56,13.653l45.013,35.307c-0.853,6.827-1.493,13.76-1.493,20.8s0.64,13.973,1.493,20.8L9.76,269.44
+            c-4.053,3.2-5.227,8.96-2.56,13.653l42.667,73.92c2.667,4.587,8.213,6.507,13.013,4.587L116,340.16
+            c10.987,8.427,23.04,15.573,36.053,21.013l8,56.533c0.853,5.013,5.227,8.96,10.56,8.96h85.333c5.333,0,9.707-3.947,10.56-8.96
+            l8-56.533c13.013-5.44,25.067-12.48,36.053-21.013l53.12,21.44c4.8,1.813,10.347,0,13.013-4.587l42.667-73.92
+            C422.027,278.507,420.853,272.747,416.8,269.44z M213.28,288c-41.28,0-74.667-33.387-74.667-74.667S172,138.667,213.28,138.667
+            s74.667,33.387,74.667,74.667S254.56,288,213.28,288z"/>
+        </svg>
+      </div>
+      <div id="drag"></div>
+    </div>
+
     <div id="panel">
+      <div>
+        <svg viewBox="0 0 92.833 92.833" id="sidebar-toggle">
+          <path d="M89.834,1.75H3c-1.654,0-3,1.346-3,3v13.334c0,1.654,1.346,3,3,3h86.833c1.653,0,3-1.346,3-3V4.75
+            C92.834,3.096,91.488,1.75,89.834,1.75z"/>
+          <path d="M89.834,36.75H3c-1.654,0-3,1.346-3,3v13.334c0,1.654,1.346,3,3,3h86.833c1.653,0,3-1.346,3-3V39.75
+            C92.834,38.096,91.488,36.75,89.834,36.75z"/>
+          <path d="M89.834,71.75H3c-1.654,0-3,1.346-3,3v13.334c0,1.654,1.346,3,3,3h86.833c1.653,0,3-1.346,3-3V74.75
+            C92.834,73.095,91.488,71.75,89.834,71.75z"/>
+        </svg>
+      </div>
       <div class="note-name" id="note-name"><!-- Name of the active note --></div>
       <div class="note-options" id="note-options">
         <svg class="dropdown-toggle" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 18c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3zm0-9c1.657 0 3 1.343 3 3s-1.343 3-3 3-3-1.343-3-3 1.343-3 3-3z"/></svg>
@@ -179,11 +219,11 @@ This is useful if you plan to continue your work on a second computer, to make s
   </template>
 
   <template id="new-version-notification-template">
-    <div id="notification" class="bold">
-      <div>New version <span id="version"></span> installed.</div>
+    <div class="notification">
+      <div>New version <span class="version"></span> installed.</div>
       <div>
         <a href="https://github.com/penge/my-notes/releases" target="_blank">What's new</a><span>,</span>
-        <a href="#" id="close">Close</a>
+        <a href="#" class="close">Close</a>
       </div>
     </div>
   </template>

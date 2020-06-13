@@ -17,13 +17,21 @@ export const autofocus = () => {
   });
 };
 
+const setActiveInSidebar = (name) => {
+  const notes = document.querySelectorAll("#sidebar-notes .note");
+  notes.forEach(note => {
+    note.classList.toggle("active", note.innerText === name);
+  });
+};
+
 export default function setActive(name, html, { renameNote, deleteNote }) {
   document.title = name;
 
   noteName.innerText = name;
   noteName.classList.toggle("reserved", isReserved(name));
-
   content.innerHTML = html;
+
+  setActiveInSidebar(name);
   autofocus();
 
   attachOptions(name, { noteOptions, renameNote, deleteNote });

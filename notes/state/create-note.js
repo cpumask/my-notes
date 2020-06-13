@@ -2,7 +2,7 @@
 
 import { isReserved } from "../reserved.js";
 
-export default function createNote(rawName) {
+export default function createNote(rawName, autoActivate) {
   const name = typeof rawName === "string" && rawName.trim();
   if (!name || isReserved(name)) {
     console.debug("CREATE - Fail (empty or reserved)");
@@ -27,7 +27,13 @@ export default function createNote(rawName) {
       modifiedTime: time,
     };
 
-    chrome.storage.local.set({ notes: notes }, () => {
+    const keys = { notes: notes };
+    // Autoactivate if created from #page-note, that is when state.active is not null
+    if (autoActivate) {
+      keys.active = name;
+    }
+
+    chrome.storage.local.set(keys, () => {
       console.debug(`CREATE - OK "${name}"`);
     });
   });

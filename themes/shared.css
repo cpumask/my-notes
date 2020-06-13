@@ -1,0 +1,111 @@
+/* Body */
+
+body {
+  margin: 0;
+  padding: 0;
+  opacity: 0;
+}
+
+/* Scrollbar */
+
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-track { background: var(--scrollbar-track-background-color); }
+::-webkit-scrollbar-thumb { background: var(--scrollbar-thumb-background-color); }
+::-webkit-scrollbar-thumb:hover { background: var(--scrollbar-thumb-hover-background-color); }
+
+/* Themes */
+
+#light, #dark, #custom { opacity: 1; }
+
+/* Theme */
+
+body {
+  background: var(--background-color);
+  color: var(--text-color);
+}
+
+a {
+  color: var(--link-color);
+}
+
+svg {
+  fill: var(--svg-fill-color);
+}
+
+.notification {
+  border-bottom: 1px solid var(--notification-border-color);
+}
+
+#drag {
+  background: var(--drag-background-color);
+  border-color: var(--drag-border-color);
+}
+
+.resizing #drag {
+  background: var(--drag-resizing-background-color);
+  border-color: var(--drag-resizing-border-color);
+}
+
+.note-tile {
+  border-color: var(--note-tile-border-color);
+}
+
+.note-tile:hover {
+  border-color: var(--note-tile-hover-border-color);
+}
+
+.dropdown {
+  background: var(--dropdown-background-color);
+  color: var(--dropdown-text-color);
+  border: 1px solid var(--dropdown-border-color);
+}
+
+#toolbar {
+  background: var(--background-color);
+  color: var(--toolbar-control-color);
+}
+
+#toolbar .control:hover {
+  background: var(--toolbar-control-hover-background-color);
+  color: var(--toolbar-control-hover-color);
+}
+
+#toolbar .control:hover > svg {
+  fill: var(--toolbar-control-hover-color);
+}
+
+#modal {
+  background: var(--modal-background-color);
+  border: 1px solid var(--modal-border-color);
+}
+
+#modal #input {
+  border: 1px solid var(--modal-input-border-color);
+}
+
+#modal #buttons input {
+  background: var(--modal-button-background-color);
+  color: var(--modal-button-text-color);
+}
+
+/* Only in Options */
+
+.hotkey {
+  background: var(--hotkey-background-color);
+  color: var(--hotkey-text-color);
+}
+
+.selection.with-comment .comment {
+  background: var(--comment-background-color);
+  color: var(--comment-text-color);
+}
+
+.slider {
+  background: var(--slider-background-color);
+}
+
+.slider::-webkit-slider-thumb {
+  background: var(--slider-thumb-background-color);
+  width: var(--slider-thumb-size);
+  height: var(--slider-thumb-size);
+}

@@ -1,4 +1,4 @@
-/* global chrome, document, fetch */
+/* global chrome, fetch */
 
 import {
   // Appearance
@@ -10,7 +10,6 @@ import {
   currentSize,
   sizeRange,
   themeRadios,
-  customInputs,
 
   // Options
   focusCheckbox,
@@ -36,7 +35,6 @@ import { requestPermission, removePermission } from "../shared/permissions/index
 import { setItem } from "../shared/storage/index.js";
 
 import { THEMES } from "../shared/storage/default-values.js";
-import { initCustomTheme } from "../themes/custom.js";
 
 function attachFontCategories() {
   for (const category of fontCategories) {
@@ -122,26 +120,8 @@ function attachThemeRadios() {
     radio.addEventListener("click", function () {
       const theme = this.id; // "light", "dark", "custom"
       if (THEMES.includes(theme)) {
-        document.body.id = theme;
         chrome.storage.local.set({ theme: theme });
       }
-    });
-  });
-}
-
-function attachCustomTheme() {
-  customInputs.forEach(input => {
-    input.addEventListener("change", function() {
-      const key = this.dataset.key;
-      const value = this.value;
-
-      chrome.storage.local.get("customTheme", local => {
-        const customTheme = local.customTheme;
-        customTheme[key] = value;
-        chrome.storage.local.set({ customTheme: customTheme }, () => {
-          initCustomTheme(customTheme);
-        });
-      });
     });
   });
 }
@@ -204,7 +184,6 @@ const attachEvents = () => {
   attachSubmit();
   attachSizeRange();
   attachThemeRadios();
-  attachCustomTheme();
 
   // Options
   attachFocusCheckbox();

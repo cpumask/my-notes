@@ -5,7 +5,7 @@
  * Used template: #note-tile-template
  */
 
-import { existingNotes, noteTileTemplate } from "./elements.js";
+import { existingNotes, noteTileTemplate, sidebarNotes } from "./elements.js";
 import { isReserved } from "../reserved.js";
 import attachOptions from "./attach-options.js";
 
@@ -36,18 +36,43 @@ const createNoteTile = (name, content, { activateNote, renameNote, deleteNote })
   return noteTile;
 };
 
-export default function setNotes(notesObject, { activateNote, renameNote, deleteNote }) {
-  const fragment = document.createDocumentFragment();
+const createSidebarNote = (name, { activeNote, activateNote }) => {
+  const div = document.createElement("div");
+  div.className = "note";
+  div.innerText = name;
+
+  if (name === activeNote) {
+    div.classList.add("active");
+  }
+
+  div.addEventListener("click", () => {
+    activateNote(name);
+  });
+
+  return div;
+};
+
+export default function setNotes(notesObject, { activeNote, activateNote, renameNote, deleteNote }) {
+  const existingNotesFragment = document.createDocumentFragment();
+  const sidebarNotesFragment = document.createDocumentFragment();
+
   let noteNames = Object.keys(notesObject);
 
   // Add all note tiles to the fragment
   for (const name of noteNames) {
     const content = notesObject[name].content;
     const noteTile = createNoteTile(name, content, { activateNote, renameNote, deleteNote });
-    fragment.appendChild(noteTile);
+    existingNotesFragment.appendChild(noteTile);
+
+    const sidebarNote = createSidebarNote(name, { activeNote, activateNote });
+    sidebarNotesFragment.appendChild(sidebarNote);
   }
 
-  // Render note tiles to <div id="existing-notes"></div>
+  // <div id="existing-notes"></div>
   existingNotes.innerHTML = "";
-  existingNotes.appendChild(fragment);
+  existingNotes.appendChild(existingNotesFragment);
+
+  // <div id="sidebar-notes"></div>
+  sidebarNotes.innerHTML = "";
+  sidebarNotes.appendChild(sidebarNotesFragment);
 }

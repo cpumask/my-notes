@@ -1,30 +1,40 @@
 /* global chrome, document */
 
-import { newVersionNotificationTemplate } from "./elements.js";
+import {
+  pageHome as home,
+  pageNote as note,
+  newVersionNotificationTemplate
+} from "./elements.js";
+
+const attachClose = (notificationElem) => {
+  const close = notificationElem.getElementsByClassName("close")[0];
+  close.addEventListener("click", (event) => {
+    event.preventDefault();
+    chrome.storage.local.remove("notification", () => {
+      document.querySelectorAll(".notification").forEach(el => el.remove());
+    });
+  });
+};
+
+const show = (root, notificationElem) => {
+  root.prepend(notificationElem);
+};
 
 export default function showNotification(notification) {
   if (!notification) {
     return;
   }
 
-  let node;
   if (notification.type === "NEW_VERSION") {
-    node = newVersionNotificationTemplate.content.cloneNode(true);
+    [home, note].forEach(root => {
+      const node = newVersionNotificationTemplate.content.cloneNode(true);
+      const notificationElem = node.children[0];
 
-    // <div>New version <span id="version"></span> has been installed.</div>
-    const version = node.getElementById("version");
-    version.innerText = notification.version;
+      const version = notificationElem.getElementsByClassName("version")[0];
+      version.innerText = notification.version;
+
+      attachClose(notificationElem);
+      show(root, notificationElem);
+    });
   }
-
-  // <a href="#" id="close">Close</a>
-  const close = node.getElementById("close");
-  close.addEventListener("click", (event) => {
-    event.preventDefault();
-    const element = document.getElementById("notification");
-    element && document.body.removeChild(element);
-    chrome.storage.local.remove("notification");
-  });
-
-  // Show the notification in the top of <body>
-  document.body.prepend(node);
 }

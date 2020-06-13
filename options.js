@@ -1,4 +1,4 @@
-/* global chrome */
+/* global document, chrome */
 
 import { renderCommonFonts } from "./options/render.js";
 renderCommonFonts();
@@ -12,7 +12,6 @@ import {
   setFont,
   setSize,
   setTheme,
-  setCustomTheme,
   setFocus,
   setNewtab,
   setTab,
@@ -26,8 +25,7 @@ chrome.storage.local.get(["font", "size", "theme", "customTheme", "focus", "newt
   const { font, size, theme, customTheme, focus, newtab, tab, sync } = local;
   setFont(font);
   setSize(size);
-  setTheme(theme);
-  setCustomTheme(customTheme);
+  setTheme(theme, customTheme);
   setFocus(focus);
   setNewtab(newtab);
   setTab(tab);
@@ -39,8 +37,20 @@ chrome.storage.onChanged.addListener((changes, areaName) => {
   if (areaName === "local") {
     setChange(changes["font"], setFont);
     setChange(changes["size"], setSize);
-    setChange(changes["theme"], setTheme);
-    setChange(changes["customTheme"], setCustomTheme);
+    setChange(changes["theme"], (theme) => {
+      if (theme === "light" || theme === "dark") {
+        setTheme(theme);
+      } else {
+        chrome.storage.local.get(["customTheme"], local => {
+          setTheme("custom", local.customTheme);
+        });
+      }
+    });
+    setChange(changes["customTheme"], (customTheme) => {
+      if (document.body.id === "custom") {
+        setTheme("custom", customTheme);
+      }
+    });
     setChange(changes["focus"], setFocus);
     setChange(changes["newtab"], setNewtab);
     setChange(changes["tab"], setTab);

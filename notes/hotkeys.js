@@ -1,7 +1,6 @@
 /* global chrome, document */
 
 import { closeDropdowns } from "./view/dropdown.js";
-import { removeModal } from "./modals.js";
 import { reset } from "./view/attach-options.js";
 
 const toggleFocus = () => {
@@ -10,12 +9,34 @@ const toggleFocus = () => {
   });
 };
 
-const register = (state) => document.addEventListener("keydown", (event) => {
+const keydown = (state) => document.addEventListener("keydown", (event) => {
   if (event.key === "Escape" || event.keyCode === 27) {
     event.preventDefault();
+
+    // Close dropdowns and overlay
     closeDropdowns();
-    removeModal();
     reset();
+
+    // Close the modal
+    const cancel = document.getElementById("cancel");
+    cancel && cancel.click();
+
+    return;
+  }
+
+  if ((event.metaKey || event.ctrlKey) && (event.key === "S" || event.key === "s")) {
+    event.preventDefault();
+    if (state.active) {
+      document.body.classList.toggle("with-sidebar");
+    }
+    return;
+  }
+
+  if ((event.metaKey || event.ctrlKey) && (event.key === "E" || event.key === "e")) {
+    event.preventDefault();
+    if (state.active) {
+      document.body.classList.toggle("with-toolbar");
+    }
     return;
   }
 
@@ -45,5 +66,16 @@ const register = (state) => document.addEventListener("keydown", (event) => {
     return;
   }
 });
+
+const keyup = () => document.addEventListener("keyup", (event) => {
+  if (event.key !== "Meta" && event.key !== "Escape" && event.keyCode !== 27) {
+    document.body.classList.remove("with-toolbar");
+  }
+});
+
+const register = (state) => {
+  keydown(state);
+  keyup();
+};
 
 export default { register };
