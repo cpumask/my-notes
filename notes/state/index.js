@@ -9,6 +9,10 @@ import view from "../view/index.js";
 let stateProxy;
 
 const activateNote = (noteName) => {
+  if (stateProxy.active === noteName) {
+    return;
+  }
+
   if (noteName in stateProxy.notes) {
     stateProxy.active = noteName;
   } else {
